@@ -1,0 +1,60 @@
+server:
+  port: 8090
+spring:
+  mail:
+    host: smtp.gmail.com # 1
+    port: 587 # 2
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: true # 5
+          timeout: 5000 # 6
+          starttls:
+            enable: true # 7
+  profiles:
+    include: secret
+  devtools:
+    livereload:
+      enabled: true
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/demo
+    username: root
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  thymeleaf:
+    cache: false
+    prefix: file:src/main/resources/templates/
+  output:
+    ansi:
+      enabled: always
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            clientId: b3c49d54b80d1701557db848d22734fb
+            scope: profile_nickname, profile_image
+            client-name: Kakao
+            authorization-grant-type: authorization_code
+            redirect-uri: '${custom.site.baseUrl}/{action}/oauth2/code/{registrationId}'
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+custom:
+  site:
+    baseUrl: http://localhost:8090
+
+  spring:
+   thymeleaf:
+     prefix: classpath:/templates/
+     suffix: .html
+     mode: HTML
