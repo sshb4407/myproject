@@ -67,7 +67,7 @@ public class UserController {
         String username = principal.getName();
         SiteUser siteUser = userService.getUser(username);
         model.addAttribute("siteUser", siteUser);
-        return "user_myPage";
+        return "mypage";
     }
 
     @PreAuthorize("isAuthenticated()")

@@ -1,6 +1,6 @@
 <nav th:fragment="navbarFragment" class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/main">SBB</a>
+        <a class="navbar-brand" href="/">SBB</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -17,7 +17,7 @@
                 </li>
                 <!-- 마이페이지 링크 -->
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/myprofile}">마이페이지</a>
+                    <a class="nav-link" th:href="@{/user/myPage}">마이페이지</a>
                 </li>
             </ul>
         </div>
