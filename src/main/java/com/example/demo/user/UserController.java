@@ -147,4 +147,33 @@ public class UserController {
             return "redirect:/user/delete";
         }
     }
-}
+        @PreAuthorize("isAuthenticated()")
+        @GetMapping("/changePassword")
+        public String changePassword (ChangePasswordForm changePasswordForm, Model model){
+            return "change_password";
+        }
+
+        @PreAuthorize("isAuthenticated()")
+        @PostMapping("/changePassword")
+        public String changePassword (@Valid ChangePasswordForm changePasswordForm, BindingResult bindingResult){
+            if (bindingResult.hasErrors()) {
+                return "change_password";
+            }
+
+            String username = SecurityContextHolder.getContext().getAuthentication().getName();
+            SiteUser siteUser = userService.getUser(username);
+
+            if (!userService.isCorrectPassword(siteUser.getUsername(), changePasswordForm.getCurrentPassword())) {
+                bindingResult.rejectValue("currentPassword", "currentPasswordIncorrect", "현재 비밀번호가 일치하지 않습니다.");
+                return "change_password";
+            }
+
+            if (!changePasswordForm.getNewPassword().equals(changePasswordForm.getConfirmPassword())) {
+                bindingResult.rejectValue("confirmPassword", "passwordMismatch", "새로운 비밀번호가 일치하지 않습니다.");
+                return "change_password";
+            }
+
+            userService.passModify(siteUser, changePasswordForm.getNewPassword());
+            return "redirect:/user/myPage";
+        }
+    }
